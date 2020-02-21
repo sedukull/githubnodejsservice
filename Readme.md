@@ -1,19 +1,19 @@
 # node js service for github org comments.
 
-## RESTful Node js service for github organization comments API. Uses Node.js, Express and MongoDB.
+-- RESTful Node js service for github organization comments API. Uses Node.js, Express and MongoDB.
 
 ## List of API's:
 
-### GET /orgs/:org/comments
-    -Retrieves the list of all comments against the given organization. It will only provide the comments which are not soft deleted.
+GET /orgs/:org/comments
+    -Retrieves the list of all comments against the given organization. It will only provide the comments which are not soft deleted. The number of comments to be retrieved by default can be controlled through config.
 
-### GET /orgs/:org/comments/:limit
+GET /orgs/:org/comments/:limit
     -Retrieves the comments for a given limited by the <limit>
  
-### GET /orgs/:org/comments?limit=1&page=1
+GET /orgs/:org/comments?limit=1&page=1
     -Helps in paginating the results.Retrieves the comments for a given org limited by input limit and paged through page numbers. Leverages the mongo limit and skip logic for server side pagination.
     
-### POST /orgs/:org/comments
+POST /orgs/:org/comments
   - {'comment': <comment info>}
    Posts the comments against the given org.
  Validations:
@@ -22,7 +22,7 @@
    3. The comment size is limited to 100 characters. The input validation for comment, can be controleld through config setting. Refer /config/app.config.json.
   
   
-### DELETE /orgs/:org/comments
+DELETE /orgs/:org/comments
 - Deletes the comments against the given org. Its a soft delete operation. The comments are still available in DB for audit. 
  
  
