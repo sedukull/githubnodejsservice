@@ -14,10 +14,10 @@ Mongodb has to be installed and configured: Ref database.config.json
 npm install
 ```
 
-2. Run Server
+2. Run the service
 
 ```bash
-node server.js
+node app.js
 ```
 
 You can browse the apis at <http://localhost:3000>
