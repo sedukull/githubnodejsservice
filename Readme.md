@@ -1,30 +1,36 @@
 # node js service for github org comments.
+-- RESTful Node js service. Wrapper for github organization comments. 
+-- Persists the comments information in mongodb instead.
+-- Uses Node.js, express and MongoDB.
 
--- RESTful Node js service for github organization comments API. Uses Node.js, Express and MongoDB.
-
-## List of API's:
+## List of API's and use cases:
 
 GET /orgs/:org/comments
-    -Retrieves the list of all comments against the given organization. It will only provide the comments which are not soft deleted. The number of comments to be retrieved by default can be controlled through config.
+    -Retrieves the list of all comments against the given github organization. 
+    -Returns the comments which are not soft deleted. 
+    -Returns all the comments for the given organization.
+    -However, the number of comments to be returned can be configured by default. Please check app.config.json
 
 GET /orgs/:org/comments/:limit
-    -Retrieves the comments for a given limited by the <limit>
+    -Retrieves the given number of comments for the given organization. 
+    -Number of comments are limited by the <limit> request param.
  
 GET /orgs/:org/comments?limit=1&page=1
-    -Helps in paginating the results.Retrieves the comments for a given org limited by input limit and paged through page numbers. Leverages the mongo limit and skip logic for server side pagination.
+    -Helps in paginating the results.
+    -Retrieves the comments for the given org.
+    -Number of comments per page are limited by <limit> request param.
+    -Leverages the mongo limit and skip logic for server side pagination.
     
-POST /orgs/:org/comments
-  - {'comment': <comment info>}
-   Posts the comments against the given org.
- Validations:
-   1. Validates whether the input org is empty and is available in the github org listing.
-   2. If validated correctly for input org, persists the comment in mongodb.
-   3. The comment size is limited to 100 characters. The input validation for comment, can be controleld through config setting. Refer /config/app.config.json.
+POST /orgs/:org/comments {'comment': <comment info>}
+   -Posts the comments against the given org.
+   -Comments are persisted, only 1. if the input org is not empty and 2. Input org is available in the github org listing.
+   -If validated correctly for input org, persists the comment in mongodb.
+   - The input comment size is limited to 100 characters. 
+   - The validation for comment size to 100 characters can be controleld through config setting. Refer /config/app.config.json.
   
   
 DELETE /orgs/:org/comments
-- Deletes the comments against the given org. Its a soft delete operation. The comments are still available in DB for audit. 
- 
+- Deletes the comments against the given org. Its a soft delete operation. The comments are still available in MongoDB for audit. 
  
 
 ## prerequisites
@@ -44,9 +50,6 @@ npm install
 ```bash
 node app.js
 ```
-
-You can browse the apis at <http://localhost:3000>
-
 
 ## Assumptions and additional Information
 1. For POST /orgs/<org>/comments operation, the solution will validate the given org(case insensitive) against the github.
